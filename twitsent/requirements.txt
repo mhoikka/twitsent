@@ -1,0 +1,7 @@
+requests==2.27.1
+clean-text==0.6.0
+tkcalendar==1.6.1
+matplotlib==3.5.2
+pymannkendall==1.4.2
+nltk==3.5
+unidecode==1.3.4
