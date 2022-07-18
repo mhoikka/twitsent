@@ -352,31 +352,6 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_
         
         
     return json_response_list
-   
-def list_extrema(senti_list, tweet_list):
-    mini = 1.01
-    maxi = -1.01
-    mini_tweet = ""
-    maxi_tweet = ""
-    min_list = []
-    max_list = []
-    counter = 0
-    for interval in senti_list:
-        mini = 1.01
-        maxi = -1.01
-        mini_tweet = ""
-        maxi_tweet = ""
-        counter = 0
-        for score in interval:
-            if score > maxi:
-                maxi = score
-                maxi_tweet = tweet_list[counter]
-            if score < mini:
-                mini = score
-                mini_tweet = tweet_list[counter]
-        min_list.append(mini)
-        max_list.append(maxi)
-        counter += 1
             
 '''
 Retrieve tweets that contain certain keywords, parse sentiment scores from the text, then graph average sentiment over a specific timespan with certain intervals
