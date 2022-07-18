@@ -4,7 +4,21 @@ import webbrowser
 import os
 
 def make_page():
-
+    '''
+    Creates and saves an HTML file describing the project, then opens it in the browser
+    
+    Parameters
+    --------
+    
+    Returns
+    --------
+        None
+        
+    Raises
+    --------
+    
+    '''
+    
     #directory of python script as variable      
     #get path to parent directory of this file
     rel_path = os.path.dirname(os.path.realpath(__file__))
@@ -73,38 +87,9 @@ def make_page():
 
     <hr>
 
-
-
-    <h2>Unordered list</h2>
-    <ul>
-      <li>First element
-      <li>Second element
-      <li>Third element
-    </ul>
-
-    <hr>
-
-    <h2>Nested Lists!</h2>
-    <ul>
-      <li>Things to to today:
-        <ol>
-          <li>Walk the dog
-          <li>Feed the cat
-          <li>Mow the lawn
-        </ol>
-      <li>Things to do tomorrow:
-        <ol>
-          <li>Lunch with mom
-          <li>Feed the hamster
-          <li>Clean kitchen
-        </ol>
-    </ul>
-
-    <p>And finally, how about some <a href=http://www.yahoo.com/>Links?</a></p>
+    <p><a href=https://github.com/mhoikka/twitsent.git/>Link to GitHub</a></p>
 
     <p>Or let's just link to <a href=../../index.html>another page on this server</a></p>
-
-    <p>Remember, you can view the HTMl code from this or any other page by using the "View Page Source" command of your browser.</p>
 
     </body>
 
