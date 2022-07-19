@@ -455,28 +455,23 @@ def main():
 
     date_c = []
     
-    print("Do you have academic access to the Twitter search API? Y/N or Q to quit")
+    print("Do you want to use your academic access to the Twitter Search API (if applicable)? Y/N or Q to quit")
     while (academic_access.lower() != 'y' and academic_access.lower() != 'n' and academic_access.lower() != 'q'):
         academic_access = input()
     if academic_access.lower() == 'q':
         return 
         
-    print("Use default data collection settings? Y/N or Q to quit")
     while (use_default.lower() != 'y' and use_default.lower() != 'n' and use_default.lower() != 'q'):
-        use_default = input()
+        use_default = input("Use default data collection settings? Y/N or Q to quit: ")
     if use_default.lower() == 'q':
         return
-        
 
-    print("Start new data collection? Y/N or Q to quit")
     while (start_fresh.lower() != 'y' and start_fresh.lower() != 'n' and start_fresh.lower() != 'q'):
-        start_fresh = input()
+        start_fresh = input("Start new data collection? Y/N or Q to quit: ")
     if start_fresh.lower() == 'q':
         return
     
-    
-    print("Enter a comma delimited list of search terms, D for default terms, or Q to quit")
-    search_terms = input().lower()
+    search_terms = input("Enter a comma delimited list of search terms, D for default terms, or Q to quit: ").lower()
     if search_terms == 'q':
         return
     if search_terms == 'd':
