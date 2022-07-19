@@ -76,11 +76,11 @@ def connect_to_endpoint(acad_access, params, exceeds_rl):
         
     """
 
-    search_url = ""
+    url = ""
     if acad_access == 'n':
-        search_url = "https://api.twitter.com/2/tweets/search/recent" 
+        url = "https://api.twitter.com/2/tweets/search/recent" 
     else: 
-        search_url = "https://api.twitter.com/2/tweets/search/all"
+        url = "https://api.twitter.com/2/tweets/search/all"
 
 
     response = requests.get(url, auth=bearer_oauth, params=params)
@@ -98,7 +98,7 @@ def connect_to_endpoint(acad_access, params, exceeds_rl):
         raise Exception(response.status_code, response.text)
 
     #full archive search rate limits searches to 300 per 15 minutes, while recent search is limited to 450 per 15 minutes
-    if exceeds_rl = True:
+    if exceeds_rl == True:
         if acad_access == 'y':
             time.sleep(3) 
         else: 
@@ -106,7 +106,7 @@ def connect_to_endpoint(acad_access, params, exceeds_rl):
 	 
     return response.json()
 
-def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_raw = dt.datetime.now(dt.timezone.utc), acad_access):
+def create_timeseries(query_params, json_max, totaltime, interval_len, acad_access, end_time_raw = dt.datetime.now(dt.timezone.utc)):
     """
     
 
@@ -136,15 +136,17 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_
     
     """
     
+    #calculate number of API requests needed
+    req_num = ((total_time/interval_len)*json_max)/100
+
     #calculate if rate limit would be exceeded when requests are made
     exceeds_rl = False
     if acad_access == 'n':
-        if ((total_time/interval_len)*json_max)/100 > 450:
+        if req_num > 450:
             exceeds_rl = True
     else:	
-        if ((total_time/interval_len)*json_max)/100 > 300:
+        if req_num > 300:
             exceeds_rl = True
-        req_num = ((total_time/interval_len)*json_max)/100
     
     #calculate likely time needed to complete search
     time_req = -1
@@ -724,8 +726,8 @@ def main():
         raise TwitterAPIArgumentError(f"Invalid rate of tweets ({json_max}) per ({interval_len}) minute{pluralizer} requested. At least one tweet must be requested per time interval.")
     
     #retrieve tweet data for each time interval within the total time queried
-    json_response_list = create_timeseries(query_params, json_max, totaltime, interval_len, end_dt, academic_access)  
-    json_response_list2 = create_timeseries(query_params2, json_max, totaltime, interval_len, end_dt, academic_access)
+    json_response_list = create_timeseries(query_params, json_max, totaltime, interval_len, academic_access, end_dt)  
+    json_response_list2 = create_timeseries(query_params2, json_max, totaltime, interval_len, academic_access, end_dt)
     
     #convert tweet text list into sentiment score list
     sentiment_list = pars.parse(json_response_list)
