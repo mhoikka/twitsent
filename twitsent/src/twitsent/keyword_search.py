@@ -137,7 +137,7 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, acad_acce
     """
     
     #calculate number of API requests needed
-    req_num = ((total_time/interval_len)*json_max)/100
+    req_num = ((totaltime/interval_len)*json_max)/100
 
     #calculate if rate limit would be exceeded when requests are made
     exceeds_rl = False
