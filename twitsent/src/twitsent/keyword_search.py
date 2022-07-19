@@ -16,13 +16,8 @@ import twitsent.dateselect as ds
 from os import listdir
 from os.path import isfile, join
 import datetime as dt
-# To set your environment variables in your (Linux) terminal run the following line:
-# export 'BEARER_TOKEN'='<your_bearer_token>'
 
-#hardcoded token for testing purposes
-bearer_token = 'AAAAAAAAAAAAAAAAAAAAALpLJAEAAAAAwm%2B7SfQEhgbzuZ7af1nthlIt5Yw%3DfGN0INCr4TdAxUveVtV0KlPP5XwyEWK0IGzWAhnvCNT2B7DNFo'
-
-search_url = "https://api.twitter.com/2/tweets/search/recent" #replace with "https://api.twitter.com/2/tweets/search/all" if you have academic access
+bearer_token = ''
 
 class RateLimitError(Exception):
     def __init__(self, message):
@@ -111,7 +106,7 @@ def connect_to_endpoint(acad_access, params, exceeds_rl):
 	 
     return response.json()
 
-def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_raw = dt.datetime.now(dt.timezone.utc)):
+def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_raw = dt.datetime.now(dt.timezone.utc), acad_access):
     """
     
 
@@ -127,6 +122,8 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_
         length of each distinct time interval for tweet retrieval in minutes
     end_time_raw : dt.datetime()
         non-adjusted end time of tweet range
+    acad_access : string
+        A string 'y'/'n' that represents whether the user has academic acces and wants to perform a full archive search
         
     Returns
     --------
@@ -139,6 +136,25 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_
     
     """
     
+    #calculate if rate limit would be exceeded when requests are made
+    exceeds_rl = False
+    if acad_access == 'n':
+        if ((total_time/interval_len)*json_max)/100 > 450:
+            exceeds_rl = True
+    else:	
+        if ((total_time/interval_len)*json_max)/100 > 300:
+            exceeds_rl = True
+        req_num = ((total_time/interval_len)*json_max)/100
+    
+    #calculate likely time needed to complete search
+    time_req = -1
+    if exceeds_rl:
+        time_req = req_num / 20
+    else:
+        time_req = req_num / 60    
+
+    print(f"{req_num} requests must be made to the API to satisfy your chosen parameters, which could take up to {time_req} minutes")
+
     #Twitter API request needs to be historical by at least 10 seconds
     offset_delta = dt.timedelta(seconds = 30)
     end_time_raw -= offset_delta   
@@ -167,7 +183,7 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_
     else: 
         query_params['max_results'] = 100
         
-    json_response = connect_to_endpoint(search_url, query_params) 
+    json_response = connect_to_endpoint(acad_access, query_params, exceeds_rl) 
         
     '''
     count number of tweets found within the last minute 
@@ -188,7 +204,7 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_
             # construct a ruleset from all rules
             query_params['next_token'] = next_token
             query_params['max_results'] = 100
-            json_response = connect_to_endpoint(search_url, query_params)
+            json_response = connect_to_endpoint(acad_access, query_params, exceeds_rl)
                 
             json_count += 1
                 
@@ -246,7 +262,7 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_
                 else: 
                     query_params['max_results'] = 100
                     
-                json_response = connect_to_endpoint(search_url, query_params) 
+                json_response = connect_to_endpoint(acad_access, query_params, exceeds_rl) 
                 
                 '''
                 extract and clean useful data from tweet, then store it in a time-delimited array
@@ -310,7 +326,7 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_
                         query_params['max_results'] = json_max
                     else: 
                         query_params['max_results'] = 100
-                    json_response = connect_to_endpoint(search_url, query_params)
+                    json_response = connect_to_endpoint(acad_access, query_params, exceeds_rl)
                     
                     '''
                     extract and clean useful data from tweet, then store it in a time-delimited array
@@ -466,7 +482,12 @@ def main():
         #Create a rule array from user input
         terms = search_terms.split(",")# TODO watch out for malicious input here
         rule = [sub_term.split(" ") for sub_term in terms]
-        
+    
+    print("Enter your bearer token or Q to quit")
+    bearer_token = input()
+    if bearer_token == 'q' or bearer_token == 'Q':
+        return
+
     query_params = tq.make_query(rule, lang)
     
     if(use_default.lower() == 'y'):
@@ -703,8 +724,8 @@ def main():
         raise TwitterAPIArgumentError(f"Invalid rate of tweets ({json_max}) per ({interval_len}) minute{pluralizer} requested. At least one tweet must be requested per time interval.")
     
     #retrieve tweet data for each time interval within the total time queried
-    json_response_list = create_timeseries(query_params, json_max, totaltime, interval_len, end_dt)  
-    json_response_list2 = create_timeseries(query_params2, json_max, totaltime, interval_len, end_dt)
+    json_response_list = create_timeseries(query_params, json_max, totaltime, interval_len, end_dt, academic_access)  
+    json_response_list2 = create_timeseries(query_params2, json_max, totaltime, interval_len, end_dt, academic_access)
     
     #convert tweet text list into sentiment score list
     sentiment_list = pars.parse(json_response_list)
