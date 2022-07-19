@@ -137,7 +137,7 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, acad_acce
     """
     
     #calculate number of API requests needed
-    req_num = ((totaltime/interval_len)*json_max)/100
+    req_num = int((totaltime/interval_len)*math.ceil(json_max/100))
 
     #calculate if rate limit would be exceeded when requests are made
     exceeds_rl = False
@@ -154,7 +154,8 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, acad_acce
         time_req = req_num / 20
     else:
         time_req = req_num / 60    
-
+	time_req = math.ceil(time_req)
+	
     print(f"{req_num} requests must be made to the API to satisfy your chosen parameters, which could take up to {time_req} minutes")
 
     #Twitter API request needs to be historical by at least 10 seconds
@@ -484,11 +485,6 @@ def main():
         #Create a rule array from user input
         terms = search_terms.split(",")# TODO watch out for malicious input here
         rule = [sub_term.split(" ") for sub_term in terms]
-    
-    print("Enter your bearer token or Q to quit")
-    bearer_token = input()
-    if bearer_token == 'q' or bearer_token == 'Q':
-        return
 
     query_params = tq.make_query(rule, lang)
     
@@ -748,4 +744,8 @@ def main():
 
     
 if __name__ == "__main__":
+	print("Enter your bearer token or Q to quit")
+    bearer_token = input()
+    if bearer_token == 'q' or bearer_token == 'Q':
+        exit()
     main()
