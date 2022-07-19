@@ -56,17 +56,19 @@ def bearer_oauth(r):
     
     return r
 
-def connect_to_endpoint(url, params):
+def connect_to_endpoint(acad_access, params, exceeds_rl):
     """
     Make http connection to Twitter Search API v2.
 
     Parameters
     --------
-    url : string
-        the web address of Twitter's Search API
+    acad_access : string
+        A string 'y'/'n' that represents whether the user has academic acces and wants to perform a full archive search
     params: dictionary
         contains the specific details of the request to the API
-        
+    exceeds_rl :
+	whether the given query will likely exceed the Twitter Search API v2 rate limit
+
     Returns
     --------
      : json
@@ -79,7 +81,13 @@ def connect_to_endpoint(url, params):
         
     """
 
-    
+    search_url = ""
+    if acad_access == 'n':
+        search_url = "https://api.twitter.com/2/tweets/search/recent" 
+    else: 
+        search_url = "https://api.twitter.com/2/tweets/search/all"
+
+
     response = requests.get(url, auth=bearer_oauth, params=params)
     print(response.status_code)
     # if rate limit response code is received, wait 15 minutes until limit is reset
@@ -93,6 +101,14 @@ def connect_to_endpoint(url, params):
         raise RateLimitError("Rate limit was not reset after 15 minutes as expected, quitting")
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
+
+    #full archive search rate limits searches to 300 per 15 minutes, while recent search is limited to 450 per 15 minutes
+    if exceeds_rl = True:
+        if acad_access == 'y':
+            time.sleep(3) 
+        else: 
+            time.sleep(2)
+	 
     return response.json()
 
 def create_timeseries(query_params, json_max, totaltime, interval_len, end_time_raw = dt.datetime.now(dt.timezone.utc)):
