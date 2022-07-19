@@ -172,7 +172,6 @@ class Cal_Impl:
         #initialize combobox for interval length variable selection
         self.interval_bxstr = tk.StringVar(value = 240)
         self.interval_bx = ttk.Combobox(self.ws, textvariable=self.interval_bxstr)
-        #self.interval_bx.bind('<<ComboboxSelected>>', interval_chosen)
         self.interval_bx['values'] = (60,240,1440)
         self.interval_bx.config(width = 15)
         
@@ -181,10 +180,9 @@ class Cal_Impl:
             self.interval_bx.config(state=tk.DISABLED)
             
         #initialize combobox for interval length variable selection
-        self.max_bxstr = tk.StringVar(value = 10)
+        self.max_bxstr = tk.StringVar(value = 100)
         self.max_bx = ttk.Combobox(self.ws, textvariable=self.max_bxstr)
-        #self.interval_bx.bind('<<ComboboxSelected>>', interval_chosen)
-        self.max_bx['values'] = (10,50,100,1000)
+        self.max_bx['values'] = (10,50,100,500,1000)
         self.max_bx.config(width = 15)
         
         #if default data collection is selected
@@ -542,7 +540,6 @@ class Cal_End:
         #initialize combobox for interval length variable selection
         self.interval_bxstr = tk.StringVar(value = 240)
         self.interval_bx = ttk.Combobox(self.ws, textvariable=self.interval_bxstr)
-        #self.interval_bx.bind('<<ComboboxSelected>>', interval_chosen)
         self.interval_bx['values'] = (60,240,1440)
         self.interval_bx.config(width = 15)
         
@@ -551,10 +548,9 @@ class Cal_End:
             self.interval_bx.config(state=tk.DISABLED)
             
         #initialize combobox for interval length variable selection
-        self.max_bxstr = tk.StringVar(value = 10)
+        self.max_bxstr = tk.StringVar(value = 100)
         self.max_bx = ttk.Combobox(self.ws, textvariable=self.max_bxstr)
-        #self.interval_bx.bind('<<ComboboxSelected>>', interval_chosen)
-        self.max_bx['values'] = (10,50,100,1000)
+        self.max_bx['values'] = (10,50,100,500,1000)
         self.max_bx.config(width = 15)
         
         #if default data collection is selected, parameter selection is unnecessary
