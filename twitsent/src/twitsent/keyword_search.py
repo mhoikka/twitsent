@@ -6,13 +6,13 @@ import pickle
 from cleantext import clean
 import re
 import time
-import twitsent.plot_sent as ps
-import twitsent.parse_sentiment as pars
-import twitsent.twitterquery as tq
+import plot_sent as ps
+import parse_sentiment as pars
+import twitterquery as tq
 import sys
 import os
-import twitsent.store_data as sd
-import twitsent.dateselect as ds
+import store_data as sd
+import dateselect as ds
 from os import listdir
 from os.path import isfile, join
 import datetime as dt
