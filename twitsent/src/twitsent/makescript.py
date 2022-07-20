@@ -89,8 +89,6 @@ def make_page():
 
     <p><a href=https://github.com/mhoikka/twitsent.git/>Link to GitHub</a></p>
 
-    <p>Or let's just link to <a href=../../index.html>another page on this server</a></p>
-
     </body>
 
     </html>
@@ -107,10 +105,6 @@ def make_page():
     # below code creates a
     # codecs.StreamReaderWriter object
     file = codecs.open(os.path.join(rel_path, 'Results-Page-TweetSA.html'), 'r', "utf-8")
-
-    # using .read method to view the html
-    # code from our object
-    print(file.read())
 
     # open html file
     webbrowser.open(os.path.join(rel_path, 'Results-Page-TweetSA.html'))
