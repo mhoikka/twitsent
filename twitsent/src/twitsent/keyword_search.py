@@ -13,6 +13,7 @@ import sys
 import os
 import twitsent.store_data as sd
 import twitsent.dateselect as ds
+import twitsent.makescript as ms
 from os import listdir
 from os.path import isfile, join
 import datetime as dt
@@ -736,7 +737,7 @@ def main():
     
     #graph sentiment data 
     ps.sent_line(avg_sent, comp_sent, totaltime, interval_len)
-
+    ms.make_page()
     
 if __name__ == "__main__":
     print("Enter your bearer token or Q to quit")
