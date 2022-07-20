@@ -2,7 +2,7 @@
 # Twitter Sentiment Tracker
 # Summer 2022 ACO 499
 
-Tracks Twitter sentiment over time using Tweets that contain certain keywords and meet certain conditions. 
+Tracks Twitter sentiment over time using Tweets that contain certain keywords and meet certain conditions.    
 To Use:  
 pip install twitsent  
 Then call the keyword_search method when tweet collection is desired. After the collection is complete, a 
