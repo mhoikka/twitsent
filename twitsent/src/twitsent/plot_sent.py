@@ -80,7 +80,6 @@ def sent_line(sent_array, sent_array_neu, totaltime, interval_len):
     #get path to parent directory of this file
     rel_path = os.path.dirname(os.path.realpath(__file__))
     plt.savefig(os.path.join(rel_path, 'sentiment_comparisongraph.png'), bbox_inches='tight')
-    plt.show()
         
 '''
 Hussain et al., (2019). pyMannKendall: a python package for non parametric Mann Kendall family of trend tests.. Journal of Open Source Software, 4(39), 1556, https://doi.org/10.21105/joss.01556
