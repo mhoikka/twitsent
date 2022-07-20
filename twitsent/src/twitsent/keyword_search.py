@@ -740,7 +740,7 @@ def main():
     ms.make_page()
     
 if __name__ == "__main__":
-    print("Enter your bearer token or Q to quit")
+    print("Enter your Twitter API v2 bearer token or Q to quit")
     bearer_token = input()
     if bearer_token == 'q' or bearer_token == 'Q':
         exit()
