@@ -154,7 +154,7 @@ def create_timeseries(query_params, json_max, totaltime, interval_len, acad_acce
         time_req = req_num / 20
     else:
         time_req = req_num / 60    
-	time_req = math.ceil(time_req)
+        time_req = math.ceil(time_req)
 	
     print(f"{req_num} requests must be made to the API to satisfy your chosen parameters, which could take up to {time_req} minutes")
 
@@ -739,7 +739,7 @@ def main():
 
     
 if __name__ == "__main__":
-	print("Enter your bearer token or Q to quit")
+    print("Enter your bearer token or Q to quit")
     bearer_token = input()
     if bearer_token == 'q' or bearer_token == 'Q':
         exit()
