@@ -7,7 +7,7 @@ Tracks Twitter sentiment over time using Tweets that contain certain keywords an
 Enter into a command line terminal   
 > pip install twitsent  
 > 
-**To run program**    
+**To Execute:**    
 Also in the terminal, type  
 > python -m twitsent  
 > 
