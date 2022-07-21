@@ -6,11 +6,14 @@ Tracks Twitter sentiment over time using Tweets that contain certain keywords an
 **To Install:**    
 Enter into a command line terminal   
 > pip install twitsent  
+> 
 **To run program**    
 Also in the terminal, type  
 > python -m twitsent  
+> 
 **OR**    
 > python3 -m twitsent
+> 
 
 ## Authors
 
