@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='twitsent',
-      version='0.0.7',
+      version='0.0.8',
       description='Twitter Sentiment Analysis package',
       url='https://github.com/mhoikka/twitsent.git',
       author='Mitchell Hoikka',
