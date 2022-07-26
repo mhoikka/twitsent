@@ -8,6 +8,15 @@ version = "0.0.8"
 authors = [
   { name="Mitchell Hoikka", email="mitchell.hoikka1@gmail.com" },
 ]
+dependencies=['requests>=2.27.1',
+  'clean-text>=0.6.0',
+  'tkcalendar>=1.6.1',
+  'matplotlib>=3.5.2',
+  'pymannkendall>=1.4.2',
+  'nltk>=3.5',
+  'unidecode>=1.3.4'
+  ]
+            
 description = "A package for tracking historical sentiment data from Twitter over certain keywords"
 readme = "README.md"
 license = { file="LICENSE" }
