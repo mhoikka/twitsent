@@ -526,16 +526,17 @@ def main():
                 file_prefix = file_data[0]
                 file_json_max = int(file_data[3])
                 file_interval_len = int(file_data[4])
-                if ((file_prefix == 'tweet' or file_prefix == 'senti' or file_prefix == 'archived') and file_json_max == json_max and file_interval_len == interval_len):
+                if ((file_prefix == 'tweet' or file_prefix == 'senti' or 'archived' in file_prefix) and file_json_max == json_max and file_interval_len == interval_len):
                     file_matches.append(file)
                  
             #if previous data storage file exists, delete it
             for file in file_matches: 
                 filepath = os.path.join(mypath,file)
-                if "archived_" in file:
+                if "archived" in file:
+	            print("Deleted old archived data")
                     os.remove(filepath)
                 if os.path.exists(filepath):
-                    os.rename(filepath, os.path.join(mypath, "archived_" + file))
+                    os.rename(filepath, os.path.join(mypath, "archived" + file))
                 else:
                     print(f"Cannot delete the file ({filepath}) because it does not exist")   
                     
