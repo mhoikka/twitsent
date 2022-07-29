@@ -533,7 +533,6 @@ def main():
             for file in file_matches: 
                 filepath = os.path.join(mypath,file)
                 if "archived" in file:
-	            print("Deleted old archived data")
                     os.remove(filepath)
                 if os.path.exists(filepath):
                     os.rename(filepath, os.path.join(mypath, "archived" + file))
