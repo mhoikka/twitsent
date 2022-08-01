@@ -6,14 +6,14 @@ import pickle
 from cleantext import clean
 import re
 import time
-import twitsent.plot_sent as ps
-import twitsent.parse_sentiment as pars
-import twitsent.twitterquery as tq
+import plot_sent as ps
+import parse_sentiment as pars
+import twitterquery as tq
 import sys
 import os
-import twitsent.store_data as sd
-import twitsent.dateselect as ds
-import twitsent.makescript as ms
+import store_data as sd
+import dateselect as ds
+import makescript as ms
 from os import listdir
 from os.path import isfile, join
 import datetime as dt
@@ -724,7 +724,8 @@ def main():
                     continue
                 file_json_max = int(file_data[3])
                 file_interval_len = int(file_data[4])
-                if ((file_prefix == 'tweet' or file_prefix == 'senti')
+                if ((file_prefix == 'tweet' or file_prefix == 'senti' 
+                        or 'archived' in file_prefix)
                         and file_json_max == json_max
                         and file_interval_len == interval_len):
                     file_matches.append(file)
