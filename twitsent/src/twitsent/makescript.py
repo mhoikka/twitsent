@@ -2,6 +2,7 @@ import codecs
 import webbrowser
 import os
 
+
 def make_page():
     '''
     Creates and saves an HTML file describing the project, then opens it in the browser
@@ -17,14 +18,14 @@ def make_page():
     --------
     
     '''
-    
-    #directory of python script as variable      
+
+    #directory of python script as variable
     #get path to parent directory of this file
     rel_path = os.path.dirname(os.path.realpath(__file__))
-    
+
     # to open/create a new html file in the write mode
     f = open(os.path.join(rel_path, 'Results-Page-TweetSA.html'), 'w')
-    
+
     #construct the full path to store collected tweet data
     filename = "sentiment_comparisongraph.png"
     mypath = os.path.join(rel_path, filename)
@@ -111,7 +112,8 @@ def make_page():
     # viewing html files
     # below code creates a
     # codecs.StreamReaderWriter object
-    file = codecs.open(os.path.join(rel_path, 'Results-Page-TweetSA.html'), 'r', "utf-8")
+    file = codecs.open(os.path.join(rel_path, 'Results-Page-TweetSA.html'),
+                       'r', "utf-8")
 
     # open html file
     webbrowser.open(os.path.join(rel_path, 'Results-Page-TweetSA.html'))

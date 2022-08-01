@@ -263,9 +263,9 @@ def create_timeseries(query_params,
     json_response_list = []  #stores all json interval data
     json_count = 0  #reset json_count variable after test
     end_copy = end_time_raw
-    
+
     print("HTTP Status codes: ")
-    
+
     #for each interval
     for time_int in range(interval_num):
         #multiple requests are made per time interval due to twitter's limit (100) to the quantity of tweets retrieved per request
