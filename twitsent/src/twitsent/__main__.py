@@ -732,15 +732,11 @@ def main():
             #if previous data storage file exists, delete it
             for file in file_matches:
                 filepath = os.path.join(mypath, file)
-                if "archived_" in file:
+                if "archived" in file:
                     os.remove(filepath)
                 if os.path.exists(filepath):
                     os.rename(filepath, os.path.join(mypath,
-                                                     "archived_" + file))
-                else:
-                    print(
-                        f"Cannot delete the file ({filepath}) because it does not exist"
-                    )
+                                                     "archived" + file))
 
         elif start_fresh.lower() == 'n':
             ci = ds.Cal_End(True)
